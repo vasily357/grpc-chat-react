@@ -7,7 +7,8 @@ import ChatPage from "./pages/ChatPage";
 import { useState, useRef } from "react";
 
 export const client = new ChatServiceClient(
-  "http://localhost:8080",
+  // "http://localhost:8080",
+  "http://77.223.96.185:8080",
   null,
   null
 );
