@@ -4,7 +4,8 @@ import { useHistory } from "react-router-dom";
 
 export const client = new ChatServiceClient(
   // "http://localhost:8080",
-  "http://77.223.96.185:8080",
+  // "http://77.223.96.185:8080",
+  "http://77.223.96.185",
   null,
   null
 );
