@@ -3,7 +3,8 @@ import { ChatServiceClient } from "./../../chat_grpc_web_pb";
 import { useHistory } from "react-router-dom";
 
 export const client = new ChatServiceClient(
-  "http://localhost:8080",
+  // "http://localhost:8080",
+  "http://77.223.96.185:8080",
   null,
   null
 );
