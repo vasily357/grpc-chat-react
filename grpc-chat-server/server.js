@@ -12,6 +12,7 @@ const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
 
 // we'll implement the handlers here
 const join = (call, callback) => {
+  console.log('CALL', call)
   const user = call.request;
 
   // check username already exists.
