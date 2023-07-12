@@ -1,8 +1,8 @@
-const grpc = require("grpc");
+const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
 
 const PROTO_PATH = "chat.proto";
-const SERVER_URI = "0.0.0.0:9090";
+const SERVER_URI = "127.0.0.1:50051";
 
 const usersInChat = [];
 const observers = [];
@@ -56,7 +56,11 @@ server.addService(protoDescriptor.ChatService.service, {
   receiveMsg,
 });
 
-server.bind(SERVER_URI, grpc.ServerCredentials.createInsecure());
-
-server.start();
-console.log("Server is running!");
+server.bindAsync(
+  SERVER_URI,
+  grpc.ServerCredentials.createInsecure(),
+  (error, port) => {
+    console.log(`Server running at http://${SERVER_URI}`);
+    server.start();
+  }
+);
