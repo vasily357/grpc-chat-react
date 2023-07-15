@@ -1,0 +1,35 @@
+server {
+	listen 80;
+	
+	server_name grpc-chat;
+
+	location / {
+		root /var/www/grpc-chat/build;
+	}
+
+    location @grpc-backend {
+        grpc_pass grpc://127.0.0.1:50051;
+    }
+
+    location @grpc-web {
+        js_header_filter grpcweb.grpc_text_headers;
+        js_body_filter grpcweb.grpc_text_response [buffer_type=buffer];
+        grpc_set_header TE "trailers";
+        grpc_set_header Content-Type "application/grpc";
+        grpc_hide_header Accept-Encoding;
+        grpc_hide_header Content-Length;
+        grpc_pass grpc://127.0.0.1:50051;
+    } 
+
+	location /ChatService {
+        js_header_filter grpcweb.grpc_text_headers;
+
+        if ($request_method != POST) {
+            return 200;
+        }
+        if ($http_content_type != "application/grpc-web-text") {
+            grpc_pass grpc://127.0.0.1:50051;
+        }
+        js_content grpcweb.grpc_text_content;
+	}
+}
